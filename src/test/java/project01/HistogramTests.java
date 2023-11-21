@@ -39,21 +39,27 @@ public class HistogramTests {
         return (int) data.stream().filter(i -> i == value).count();
     }
 
-    @Property // TODO: specify jqwik annotations for the parameters, note we have conveniently marked with ??? where to insert code
+    @Property // (tries = 10000)// specify jqwik annotations for the parameters, note we have conveniently marked with ??? where to insert code
     void histogramDoesNotCrash(@ForAll @IntRange(min = -100, max = 0) List<Integer> data) {
         new Histogram(data);
     }
+    //void histogramDoesNotCrash(@ForAll @NotNull List<@IntRange(min = -100000, max = 10000) Integer> data) {
+    //    new Histogram(data);
+    //}
 
-    @Property // TODO: specify jqwik annotations for the parameters
+    @Property // (tries = 10000)// specify jqwik annotations for the parameters
     void histogramCount(@ForAll @IntRange(min = -100, max = 100) List<Integer> data,@ForAll @IntRange(min = -50, max = 50) int value) {
-        // TODO: check method count of class Histogram against reference implementation countOccurrences
+//        void histogramCount(@ForAll @NotNull List<@IntRange(min = -100, max = 100) Integer> data,@ForAll @IntRange(min = -50, max = 50) int value) {
+        // check method count of class Histogram against reference implementation countOccurrences
         Histogram histogram = new Histogram(data);
         Assertions.assertEquals(countOccurrences(value, data), histogram.count(value));
     }
 
-    @Property // TODO: specify jqwik annotations for the parameters
+    @Property // (tries = 10000)//  specify jqwik annotations for the parameters
     void histogramRange(@ForAll @IntRange(min = 0, max = 100) List<Integer> data,@ForAll @IntRange(min = 50, max = 100) int value) {
-        // TODO: check that if countOccurrences(value) > 0 then
+        //void histogramRange(@ForAll @NotNull List<@IntRange(min = 0, max = 100) Integer> data,@ForAll @IntRange(min = 50, max = 100) int value) {
+
+        // check that if countOccurrences(value) > 0 then
         //       value is between min and max of the corresponding histogram
         Histogram histogram = new Histogram(data);
         Assume.that(countOccurrences(value, data) > 0);
